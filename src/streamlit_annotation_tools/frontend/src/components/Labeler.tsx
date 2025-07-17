@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect, useCallback, useState } from "react"
+import React, { useReducer, useEffect, useCallback, useState, useRef } from "react"
 import { Streamlit } from "streamlit-component-lib"
 import { useRenderData } from "../utils/StreamlitProvider"
 import { ActionTypes, IAction, IState } from "../types/labelerTypes"
@@ -12,6 +12,7 @@ const Labeler: React.FC = () => {
     reducer,
     initialState
   )
+  const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,6 +28,20 @@ const Labeler: React.FC = () => {
   useEffect(() => {
     dispatch({ type: ActionTypes.RENDER_TEXT })
   }, [state.labels, state.selectedLabel])
+
+  // Adjust component height when content changes
+  useEffect(() => {
+    const adjustHeight = () => {
+      if (containerRef.current) {
+        const height = containerRef.current.scrollHeight
+        Streamlit.setFrameHeight(height + 20) // Add some padding
+      }
+    }
+    
+    // Small delay to ensure DOM is updated
+    const timeoutId = setTimeout(adjustHeight, 10)
+    return () => clearTimeout(timeoutId)
+  }, [state.labels, state.actual_text, state.selectedLabel])
 
   const handleMouseUp = useCallback(async () => {
     if (!state.selectedLabel) return
@@ -75,7 +90,7 @@ const Labeler: React.FC = () => {
   }
 
   return (
-    <div>
+    <div ref={containerRef}>
       <div className="flex flex-row flex-wrap">
         <div className="flex flex-wrap justify-between items-center cursor-pointer mr-2 mb-2 pr-3 rounded text-white text-base bg-primary hover:bg-secondary">
           <input
@@ -118,7 +133,7 @@ const Labeler: React.FC = () => {
           )
         })}
       </div>
-      <div id="actual-text" className="mt-5 h-full" onMouseUp={handleMouseUp}>
+      <div id="actual-text" className="mt-5 min-h-0" onMouseUp={handleMouseUp}>
         {state.actual_text}
       </div>
     </div>
