@@ -1,1 +1,1 @@
-recursive-include streamlit_annotation_tools/frontend/build *
+recursive-include src/streamlit_annotation_tools/frontend/build *
