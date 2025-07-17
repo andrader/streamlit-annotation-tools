@@ -3,7 +3,7 @@ import { Streamlit } from "streamlit-component-lib"
 import { useRenderData } from "../utils/StreamlitProvider"
 import { ActionTypes, IAction, IState } from "../types/labelerTypes"
 import { initialState, reducer } from "../reducers/labelerReducer"
-import { adjustSelectionBounds, getCharactersCountUntilNode, isLabeled, removeLabelData } from "../helpers/labelerHelpers"
+import { adjustSelectionBounds, getCharactersCountUntilNode, isLabeled, removeLabelData, getLabelColor } from "../helpers/labelerHelpers"
 
 const Labeler: React.FC = () => {
   const { args } = useRenderData()
@@ -88,32 +88,35 @@ const Labeler: React.FC = () => {
           <button onClick={() => addLabel(labelName)}>Add Label</button>
         </div>
 
-        {Object.keys(state.labels).map((label, index) => (
-          <span
-            key={index}
-            className={
-              "flex flex-wrap justify-between items-center cursor-pointer py-1 px-3 mr-2 mb-2 rounded text-base" +
-              (state.selectedLabel === label
-                ? " bg-primary hover:bg-secondary text-white"
-                : " border border-primary text-primary hover:bg-primary hover:text-white")
-            }
-            onClick={() => selectLabel(label)}
-          >
-            {label}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5 ml-3 hover:text-gray-300"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              onClick={() => removeLabel(label)}
+        {Object.keys(state.labels).map((label, index) => {
+          const labelColor = getLabelColor(label, index)
+          return (
+            <span
+              key={index}
+              className={
+                "flex flex-wrap justify-between items-center cursor-pointer py-1 px-3 mr-2 mb-2 rounded text-base" +
+                (state.selectedLabel === label
+                  ? ` ${labelColor.bg} ${labelColor.hover} text-white`
+                  : ` border ${labelColor.border} ${labelColor.text} hover:${labelColor.bg} hover:text-white`)
+              }
+              onClick={() => selectLabel(label)}
             >
-              <path
-                fillRule="evenodd"
-                d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
-              />
-            </svg>
-          </span>
-        ))}
+              {label}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5 ml-3 hover:text-gray-300"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                onClick={() => removeLabel(label)}
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                />
+              </svg>
+            </span>
+          )
+        })}
       </div>
       <div id="actual-text" className="mt-5 h-full" onMouseUp={handleMouseUp}>
         {state.actual_text}

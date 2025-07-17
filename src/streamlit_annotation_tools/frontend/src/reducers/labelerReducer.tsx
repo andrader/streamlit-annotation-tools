@@ -1,7 +1,7 @@
 import { Streamlit } from "streamlit-component-lib"
 import { ActionTypes, IAction, IState } from "../types/labelerTypes"
 import React from "react"
-import { formatKeys } from "../helpers/labelerHelpers"
+import { formatKeys, getLabelColorByName } from "../helpers/labelerHelpers"
 
 // Define the initial state of the component
 export const initialState: IState = {
@@ -46,6 +46,9 @@ export const reducer = (state: IState, action: IAction): IState => {
         selectedLabel = Object.keys(labels)[Object.keys(labels).length - 1]
       }
 
+      const labelNames = Object.keys(labels)
+      const labelColor = getLabelColorByName(selectedLabel, labelNames)
+
       labels[selectedLabel]
         ?.sort((a, b) => a.start - b.start)
         .forEach((label, index) => {
@@ -57,7 +60,7 @@ export const reducer = (state: IState, action: IAction): IState => {
           actual_text.push(
             <span
               key={`labeled-${index}`}
-              className="labeled border border-primary bg-primary/20"
+              className={`labeled border ${labelColor.border} ${labelColor.bgLight}`}
             >
               {text.substring(label.start, label.end)}
             </span>
