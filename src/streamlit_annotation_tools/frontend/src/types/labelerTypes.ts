@@ -18,6 +18,7 @@ export interface IState {
     selectedLabel: string;
     labels: { [key: string]: ILabel[]};
     in_snake_case: boolean;
+    showAllLabels: boolean;
 }
 
 export interface IAction {

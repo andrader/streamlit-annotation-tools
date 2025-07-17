@@ -88,7 +88,13 @@ def text_highlighter(text: str, highlights=[]):
     return component_value
 
 
-def text_labeler(text: str, labels=[], in_snake_case=False, allow_new_labels=True):
+def text_labeler(
+    text: str,
+    labels=[],
+    in_snake_case=False,
+    allow_new_labels=True,
+    show_all_labels=False,
+):
     """Create a new instance of "text_labeler".
 
     Parameters
@@ -119,6 +125,10 @@ def text_labeler(text: str, labels=[], in_snake_case=False, allow_new_labels=Tru
     allow_new_labels : bool
         If True, shows the "Enter Label Name" input and "Add Label" button to allow creating new labels.
         If False, hides these controls and only allows labeling with existing labels.
+
+    show_all_labels : bool
+        If True, shows all labels simultaneously by default.
+        If False, shows only the selected label by default.
 
     Returns
     -------
@@ -151,6 +161,7 @@ def text_labeler(text: str, labels=[], in_snake_case=False, allow_new_labels=Tru
         labels=labels,
         in_snake_case=in_snake_case,
         allow_new_labels=allow_new_labels,
+        show_all_labels=show_all_labels,
         mode="text_labeler",
     )
 
@@ -218,7 +229,13 @@ if __name__ == "__main__":
             "Money": [{"start": 179, "end": 198, "label": "500 million dollars"}],
         }
 
-        labels = text_labeler(text, labels, in_snake_case=False, allow_new_labels=True)
+        labels = text_labeler(
+            text,
+            labels,
+            in_snake_case=False,
+            allow_new_labels=True,
+            show_all_labels=False,
+        )
 
         st.write("Labels:")
         st.write(labels)

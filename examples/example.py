@@ -59,8 +59,13 @@ def labeler_page():
     }
 
     allow_new_labels = st.checkbox("Allow adding new labels", value=True)
+    show_all_labels = st.checkbox("Show all labels", value=True)
     labels = text_labeler(
-        text, labels, in_snake_case=False, allow_new_labels=allow_new_labels
+        text,
+        labels,
+        in_snake_case=False,
+        allow_new_labels=allow_new_labels,
+        show_all_labels=show_all_labels,
     )
 
     st.write("Labels:")

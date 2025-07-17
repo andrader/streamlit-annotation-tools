@@ -96,6 +96,18 @@ predefined_labels = {
     "Locations": [],
 }
 labels = text_labeler(text, labels=predefined_labels, allow_new_labels=False)
+
+# Or show all labels simultaneously by default
+labels = text_labeler(text, show_all_labels=True)
+
+# All parameters
+labels = text_labeler(
+    text,
+    labels=predefined_labels,
+    in_snake_case=False,
+    allow_new_labels=True,
+    show_all_labels=False
+)
 ```
 
 Run:
@@ -135,6 +147,21 @@ Output:
     "Money": [{"start": 179, "end": 198, "label": "500 million dollars"}],
 }
 ```
+
+## Features
+
+### Show All Labels Simultaneously
+
+The text labeler now supports showing all labels from all categories at once, instead of just the selected category. This is useful when you want to see the complete annotation overview.
+
+- **Default behavior**: Shows only the selected label category
+- **With `show_all_labels=True`**: Shows all labels from all categories simultaneously
+- **API Control**: This feature is controlled through the Python API parameter only
+
+When multiple labels overlap, the tool handles them intelligently by:
+- Using different colors for each label category
+- Adding tooltips to show which category each label belongs to
+- Properly handling nested and overlapping spans
 
 # Development
 

@@ -16,8 +16,8 @@ const Labeler: React.FC = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const { text, labels, in_snake_case } = args
-      dispatch({ type: ActionTypes.SET_TEXT_LABELS, payload: { text, labels, in_snake_case } })
+      const { text, labels, in_snake_case, show_all_labels } = args
+      dispatch({ type: ActionTypes.SET_TEXT_LABELS, payload: { text, labels, in_snake_case, show_all_labels } })
       dispatch({ type: ActionTypes.RENDER_TEXT })
       Streamlit.setComponentValue(labels)
     }
@@ -89,6 +89,8 @@ const Labeler: React.FC = () => {
     if (args.allow_new_labels === false) return
     dispatch({ type: ActionTypes.REMOVE_LABEL, payload: name })
   }
+
+
 
   return (
     <div ref={containerRef}>
