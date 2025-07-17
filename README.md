@@ -1,11 +1,16 @@
 <h1> streamlit-annotation </h1>
 
+> **Note**: This is a fork of [rmarquet21/streamlit-annotation-tools](https://github.com/rmarquet21/streamlit-annotation-tools). All credit goes to the original author Robin Marquet.
+
 - [Streamlit Annotation Tools](#streamlit-annotation-tools)
+- [What's New in This Fork](#whats-new-in-this-fork)
+- [Installation](#installation)
+  - [From GitHub (Recommended)](#from-github-recommended)
+  - [For Development](#for-development)
 - [Demo](#demo)
   - [Try](#try)
   - [Text Highlighter](#text-highlighter)
   - [Text Labeler](#text-labeler)
-- [Install](#install)
 - [Quick Use](#quick-use)
   - [Text Highlighter](#text-highlighter-1)
   - [Text Labeler](#text-labeler-1)
@@ -18,12 +23,59 @@
 
 # Streamlit Annotation Tools
 
-[![PyPI version](https://badge.fury.io/py/streamlit-annotation-tools.svg)](https://badge.fury.io/py/streamlit-annotation-tools)
-[![Downloads](https://pepy.tech/badge/streamlit-annotation-tools)](https://pepy.tech/project/streamlit-annotation-tools)
-[![Downloads](https://pepy.tech/badge/streamlit-annotation-tools/month)](https://pepy.tech/project/streamlit-annotation-tools)
-[![Downloads](https://pepy.tech/badge/streamlit-annotation-tools/week)](https://pepy.tech/project/streamlit-annotation-tools)
-
 Streamlit Annotation Tools is a Streamlit component that gives you access to various annotation tools (labeling, annotation, etc.) for text data.
+
+# What's New in This Fork
+
+This fork includes several enhancements and improvements over the original repository:
+
+## 🚀 **New Features**
+
+### Text Labeler Enhancements
+- **Show All Labels Simultaneously**: Display all labels from all categories at once with `show_all_labels=True`
+- **Label Creation Control**: Option to allow or restrict new label creation with `allow_new_labels` parameter
+- **Dynamic Height Adjustment**: Labeler component now automatically adjusts height based on content
+- **Dynamic Label Colors**: Enhanced visual experience with improved color management for labels
+
+### Build System Improvements
+- **Migrated from Poetry to Hatch**: More modern and efficient build system
+- **UV Lock File**: Faster dependency resolution and installation
+- **Improved Package Management**: Better dependency organization and development workflow
+
+## 📋 **Detailed Changes**
+
+| Feature                | Description                                 | Commit    |
+| ---------------------- | ------------------------------------------- | --------- |
+| Show All Labels        | Display all label categories simultaneously | `a85ed9b` |
+| Label Creation Control | Allow/restrict new label creation           | `d981d0d` |
+| Dynamic Height         | Auto-adjust component height                | `af80eae` |
+| Dynamic Colors         | Enhanced label color management             | `c732d73` |
+| Build System           | Poetry → Hatch migration                    | `be39456` |
+
+# Installation
+
+## From GitHub (Recommended)
+
+Since this is a fork and not published to PyPI, install directly from GitHub:
+
+```bash
+pip install git+https://github.com/andrader/streamlit-annotation-tools.git
+```
+
+## For Development
+
+Clone the repository and install in development mode:
+
+```bash
+git clone https://github.com/andrader/streamlit-annotation-tools.git
+cd streamlit-annotation-tools
+pip install -e .
+```
+
+### Prerequisites
+
+- Python 3.12+
+- Node.js (for frontend development)
 
 # Demo
 
@@ -35,12 +87,6 @@ Streamlit Annotation Tools is a Streamlit component that gives you access to var
 
 ## Text Labeler
 ![](docs/label_tool.gif)
-
-# Install
-
-```
-pip install streamlit-annotation-tools
-```
 
 # Quick Use
 
