@@ -6,7 +6,7 @@ readme = "README.md"
 authors = [
     { name = "Rubens", email = "38709237+andrader@users.noreply.github.com" }
 ]
-requires-python = ">=3.12"
+requires-python = ">=3.9"
 dependencies = [
     "streamlit>=1.21.0",
 ]
