@@ -86,7 +86,16 @@ from streamlit_annotation_tools import text_labeler
 
 text = "Yesterday, at 3 PM, Emily Johnson and Michael Smith met at the Central Park in New York to discuss the merger between TechCorp and Global Solutions. The deal, worth approximately 500 million dollars, is expected to significantly impact the tech industry. Later, at 6 PM, they joined a conference call with the CEO of TechCorp, David Brown, who was in London for a technology summit. During the call, they discussed the market trends in Asia and Europe and planned for the next quarterly meeting, which is scheduled for January 15th, 2024, in Paris."
 
+# Allow users to add new labels (default)
 labels = text_labeler(text)
+
+# Or restrict to only using pre-defined labels
+predefined_labels = {
+    "Personal names": [],
+    "Organizations": [],
+    "Locations": [],
+}
+labels = text_labeler(text, labels=predefined_labels, allow_new_labels=False)
 ```
 
 Run:

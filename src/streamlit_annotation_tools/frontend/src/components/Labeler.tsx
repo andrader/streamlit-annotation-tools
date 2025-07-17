@@ -75,7 +75,7 @@ const Labeler: React.FC = () => {
   }, [state, dispatch]);
 
   const addLabel = (name: string) => {
-    if (name.trim() === "") return
+    if (name.trim() === "" || args.allow_new_labels === false) return
 
     setLabelName("")
     dispatch({ type: ActionTypes.ADD_LABEL, payload: name })
@@ -86,22 +86,25 @@ const Labeler: React.FC = () => {
   }
 
   const removeLabel = (name: string) => {
+    if (args.allow_new_labels === false) return
     dispatch({ type: ActionTypes.REMOVE_LABEL, payload: name })
   }
 
   return (
     <div ref={containerRef}>
       <div className="flex flex-row flex-wrap">
-        <div className="flex flex-wrap justify-between items-center cursor-pointer mr-2 mb-2 pr-3 rounded text-white text-base bg-primary hover:bg-secondary">
-          <input
-            type="text"
-            placeholder="Enter Label Name"
-            className="text-black p-1 mr-2 focus:outline-none border border-secondary"
-            onChange={(e) => setLabelName(e.target.value)}
-            value={labelName}
-          />
-          <button onClick={() => addLabel(labelName)}>Add Label</button>
-        </div>
+        {args.allow_new_labels !== false && (
+          <div className="flex flex-wrap justify-between items-center cursor-pointer mr-2 mb-2 pr-3 rounded text-white text-base bg-primary hover:bg-secondary">
+            <input
+              type="text"
+              placeholder="Enter Label Name"
+              className="text-black p-1 mr-2 focus:outline-none border border-secondary"
+              onChange={(e) => setLabelName(e.target.value)}
+              value={labelName}
+            />
+            <button onClick={() => addLabel(labelName)}>Add Label</button>
+          </div>
+        )}
 
         {Object.keys(state.labels).map((label, index) => {
           const labelColor = getLabelColor(label, index)
@@ -117,18 +120,20 @@ const Labeler: React.FC = () => {
               onClick={() => selectLabel(label)}
             >
               {label}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 ml-3 hover:text-gray-300"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-                onClick={() => removeLabel(label)}
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
-                />
-              </svg>
+              {args.allow_new_labels !== false && (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5 ml-3 hover:text-gray-300"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  onClick={() => removeLabel(label)}
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                  />
+                </svg>
+              )}
             </span>
           )
         })}

@@ -88,7 +88,7 @@ def text_highlighter(text: str, highlights=[]):
     return component_value
 
 
-def text_labeler(text: str, labels=[], in_snake_case=False):
+def text_labeler(text: str, labels=[], in_snake_case=False, allow_new_labels=True):
     """Create a new instance of "text_labeler".
 
     Parameters
@@ -115,6 +115,10 @@ def text_labeler(text: str, labels=[], in_snake_case=False):
 
     in_snake_case : bool
         If True, the labels will be converted to snake case before being returned.
+
+    allow_new_labels : bool
+        If True, shows the "Enter Label Name" input and "Add Label" button to allow creating new labels.
+        If False, hides these controls and only allows labeling with existing labels.
 
     Returns
     -------
@@ -143,7 +147,11 @@ def text_labeler(text: str, labels=[], in_snake_case=False):
     # "default" is a special argument that specifies the initial return
     # value of the component before the user has interacted with it.
     component_value = _component(
-        text=text, labels=labels, in_snake_case=in_snake_case, mode="text_labeler"
+        text=text,
+        labels=labels,
+        in_snake_case=in_snake_case,
+        allow_new_labels=allow_new_labels,
+        mode="text_labeler",
     )
 
     # We could modify the value returned from the component if we wanted.
@@ -210,7 +218,7 @@ if __name__ == "__main__":
             "Money": [{"start": 179, "end": 198, "label": "500 million dollars"}],
         }
 
-        labels = text_labeler(text, labels, in_snake_case=False)
+        labels = text_labeler(text, labels, in_snake_case=False, allow_new_labels=True)
 
         st.write("Labels:")
         st.write(labels)

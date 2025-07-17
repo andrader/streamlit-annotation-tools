@@ -1,4 +1,5 @@
 import streamlit as st
+
 from streamlit_annotation_tools import text_highlighter, text_labeler
 
 
@@ -57,7 +58,10 @@ def labeler_page():
         "Money": [{"start": 179, "end": 198, "label": "500 million dollars"}],
     }
 
-    labels = text_labeler(text, labels, in_snake_case=False)
+    allow_new_labels = st.checkbox("Allow adding new labels", value=True)
+    labels = text_labeler(
+        text, labels, in_snake_case=False, allow_new_labels=allow_new_labels
+    )
 
     st.write("Labels:")
     st.write(labels)
